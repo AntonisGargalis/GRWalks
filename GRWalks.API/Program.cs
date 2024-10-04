@@ -1,4 +1,5 @@
 using GRWalks.API.Data;
+using GRWalks.API.Mappings;
 using GRWalks.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,6 +16,8 @@ builder.Services.AddDbContext<GRWalksDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("GRWalksConnectionString")));
 
 builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+
+builder.Services.AddAutoMapper(typeof(AutoMapperProfiles));
 
 var app = builder.Build();
 
