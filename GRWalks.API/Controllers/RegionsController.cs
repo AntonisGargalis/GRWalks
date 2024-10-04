@@ -1,6 +1,7 @@
 ﻿using GRWalks.API.Data;
 using GRWalks.API.Models.Domain;
 using GRWalks.API.Models.DTO;
+using GRWalks.API.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +13,18 @@ namespace GRWalks.API.Controllers
     public class RegionsController : ControllerBase
     {
         private readonly GRWalksDbContext _dbContext;
+        private readonly IRegionRepository _regionRepository;
 
-        public RegionsController(GRWalksDbContext dbContext) 
+        public RegionsController(GRWalksDbContext dbContext, IRegionRepository regionRepository) 
         {
             _dbContext = dbContext;
+            _regionRepository = regionRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             // getting data from data base - domain models
-            var regionsDomain = await _dbContext.Regions.ToListAsync();
+            var regionsDomain = await _regionRepository.GetAllAsync();
 
             //Map domain models to dtos
             var regionsDto = new List<RegionDto>();
@@ -45,7 +48,7 @@ namespace GRWalks.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> GetRegionByid([FromRoute] Guid id) 
         {
-            var regionDomain = await _dbContext.Regions.FindAsync(id); //we use Find method only for id property
+            var regionDomain = await _regionRepository.GetRegionByIdAsync(id); //we use Find method only for id property
 
             // var regions = _dbContext.Regions.FirstOrDefaultAsync(x => x.Name == name); use any field, for ex "name" if it was in parameter
 
@@ -77,8 +80,7 @@ namespace GRWalks.API.Controllers
             };     
             
             // Use Domain Model to create Region
-            await _dbContext.Regions.AddAsync(regionDomainModel);
-            await _dbContext.SaveChangesAsync();
+            await _regionRepository.CreateAsync(regionDomainModel);
             return Ok();
         }
 
@@ -86,28 +88,28 @@ namespace GRWalks.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody]UpdateRegionDto updateRegionDto) 
         {
-            // check first if exist
-            var regionDomain = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            //Map DTO to Domain Model
+            var regionDomainModel = new Region
+            {
+                Name = updateRegionDto.Name,
+                Code = updateRegionDto.Code,
+                RegionImageUrl = updateRegionDto.RegionImageUrl
+            };
 
-            if (regionDomain == null)
+            regionDomainModel = await _regionRepository.UpdateAsync(id, regionDomainModel);
+
+            if (regionDomainModel == null)
             {
                 return NotFound();
             }
 
-            // Map DTO to Domain model
-            regionDomain.Name = updateRegionDto.Name;
-            regionDomain.Code = updateRegionDto.Code;
-            regionDomain.RegionImageUrl = updateRegionDto.RegionImageUrl;
-
-            await _dbContext.SaveChangesAsync();
-
             //Convert Domain Model to Dto
             var regionDto = new RegionDto
             {
-                Id = regionDomain.Id,
-                Name = regionDomain.Name,
-                Code = regionDomain.Code,
-                RegionImageUrl = regionDomain.RegionImageUrl,
+                Id = regionDomainModel.Id,
+                Name = regionDomainModel.Name,
+                Code = regionDomainModel.Code,
+                RegionImageUrl = regionDomainModel.RegionImageUrl,
             };
 
             return Ok(regionDto);
@@ -117,15 +119,12 @@ namespace GRWalks.API.Controllers
         [Route("{id:Guid}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
-            var regionDomain = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+            var regionDomainModel = await _regionRepository.DeleteAsync(id);
 
-            if (regionDomain == null)
+            if (regionDomainModel == null)
             {
                 return NotFound();
             }
-
-            _dbContext.Regions.Remove(regionDomain);
-            await _dbContext.SaveChangesAsync();
 
             return Ok();
         }      

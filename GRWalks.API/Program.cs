@@ -1,4 +1,5 @@
 using GRWalks.API.Data;
+using GRWalks.API.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<GRWalksDbContext>(options => 
 options.UseSqlServer(builder.Configuration.GetConnectionString("GRWalksConnectionString")));
+
+builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 
 var app = builder.Build();
 
