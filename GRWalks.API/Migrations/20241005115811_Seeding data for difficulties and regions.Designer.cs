@@ -4,6 +4,7 @@ using GRWalks.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GRWalks.API.Migrations
 {
     [DbContext(typeof(GRWalksDbContext))]
-    partial class GRWalksDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241005115811_Seeding data for difficulties and regions")]
+    partial class Seedingdatafordifficultiesandregions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

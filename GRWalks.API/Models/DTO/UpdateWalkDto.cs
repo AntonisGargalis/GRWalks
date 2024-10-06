@@ -1,17 +1,20 @@
-﻿namespace GRWalks.API.Models.Domain
+﻿using GRWalks.API.Models.Domain;
+using System.ComponentModel.DataAnnotations;
+
+namespace GRWalks.API.Models.DTO
 {
-    public class Walk
+    public class UpdateWalkDto
     {
-        public Guid Id { get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public double LengthInKm { get; set; }
         public string? WalkImageUrl { get; set; }
+        [Required]
         public Guid DifficultyId { get; set; }
+        [Required]
         public Guid RegionId { get; set; }
-
-        // Navigation Properties
-        public Difficulty Difficulty { get; set; }
-        public Region Region { get; set; }
     }
 }

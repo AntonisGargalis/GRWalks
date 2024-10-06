@@ -9,10 +9,14 @@ namespace GRWalks.API.Mappings
         public AutoMapperProfiles()
         {
             CreateMap<Region, RegionDto>().ReverseMap();
-
             CreateMap<AddRegionDto, Region>().ReverseMap();
-
             CreateMap<UpdateRegionDto, Region>().ReverseMap();
+
+            CreateMap<AddWalkDto, Walk>().ReverseMap();
+            CreateMap<Walk, WalkDto>().ReverseMap();
+            CreateMap<Walk, UpdateWalkDto>().ReverseMap();
+
+            CreateMap<Difficulty, DifficultyDto>().ReverseMap();
         }
     }
 }

@@ -19,6 +19,7 @@ namespace GRWalks.API.Repositories
         }
         public async Task<Region?> GetRegionByIdAsync(Guid id)
         {
+            //we use Find method only for id property
             return await _dbContext.Regions.FindAsync(id);
         }
         public async Task<Region> CreateAsync(Region region)
