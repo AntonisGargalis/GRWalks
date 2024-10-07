@@ -5,7 +5,7 @@ namespace GRWalks.API.Data
 {
     public class GRWalksDbContext : DbContext
     {
-        public GRWalksDbContext(DbContextOptions dbContextOptions): base(dbContextOptions) 
+        public GRWalksDbContext(DbContextOptions<GRWalksDbContext> dbContextOptions): base(dbContextOptions) 
         {
             
         }

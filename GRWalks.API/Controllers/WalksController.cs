@@ -3,13 +3,14 @@ using GRWalks.API.CustomActionFilters;
 using GRWalks.API.Models.Domain;
 using GRWalks.API.Models.DTO;
 using GRWalks.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GRWalks.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    
+    [Authorize]
     public class WalksController : ControllerBase
     {
         private readonly IMapper _mapper;
