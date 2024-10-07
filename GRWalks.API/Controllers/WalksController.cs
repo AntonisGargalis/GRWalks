@@ -35,10 +35,11 @@ namespace GRWalks.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? filterOn, [FromQuery] string? filterQuery, 
+            [FromQuery] string? sortBy, [FromQuery] bool? isAscending)
         {
             // getting data from data base - domain models
-            var walksDomain = await _walkRepository.GetAllAsync();
+            var walksDomain = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending??true);
 
             //Map domain models to dtos Using AutoMapping
             var walksDto = _mapper.Map<List<WalkDto>>(walksDomain);
