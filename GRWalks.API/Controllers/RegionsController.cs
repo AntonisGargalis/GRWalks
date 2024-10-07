@@ -4,6 +4,7 @@ using GRWalks.API.Data;
 using GRWalks.API.Models.Domain;
 using GRWalks.API.Models.DTO;
 using GRWalks.API.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -23,6 +24,7 @@ namespace GRWalks.API.Controllers
             _mapper = mapper;
         }
         [HttpGet]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetAll()
         {
             // getting data from data base - domain models
@@ -38,6 +40,7 @@ namespace GRWalks.API.Controllers
         //ip: https://localhost:portnumber/api/regions/{id}
         [HttpGet]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Reader")]
         public async Task<IActionResult> GetRegionByid([FromRoute] Guid id) 
         {
             var regionDomain = await _regionRepository.GetRegionByIdAsync(id); 
@@ -54,6 +57,7 @@ namespace GRWalks.API.Controllers
 
         [HttpPost]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Create([FromBody] AddRegionDto addRegionDto)
         {
             //Map Dto to domain model
@@ -67,6 +71,7 @@ namespace GRWalks.API.Controllers
         [HttpPut]
         [Route("{id:Guid}")]
         [ValidateModel]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody]UpdateRegionDto updateRegionDto) 
         {
             //Map DTO to Domain Model
@@ -87,6 +92,7 @@ namespace GRWalks.API.Controllers
 
         [HttpDelete]
         [Route("{id:Guid}")]
+        [Authorize(Roles = "Writer")]
         public async Task<IActionResult> Delete([FromRoute] Guid id)
         {
             var regionDomainModel = await _regionRepository.DeleteAsync(id);
