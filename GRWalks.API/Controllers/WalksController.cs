@@ -5,6 +5,7 @@ using GRWalks.API.Models.DTO;
 using GRWalks.API.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace GRWalks.API.Controllers
 {
@@ -39,11 +40,15 @@ namespace GRWalks.API.Controllers
             [FromQuery] string? sortBy, [FromQuery] bool? isAscending,
             [FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 100)
         {
+
             // getting data from data base - domain models
-            var walksDomain = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending??true, pageNumber, pageSize);
+            var walksDomain = await _walkRepository.GetAllAsync(filterOn, filterQuery, sortBy, isAscending ?? true, pageNumber, pageSize);
 
             //Map domain models to dtos Using AutoMapping
             var walksDto = _mapper.Map<List<WalkDto>>(walksDomain);
+
+            //Create an Exception
+            //throw new Exception("This is a new exception");
 
             //return dtos only
             return Ok(walksDto);
