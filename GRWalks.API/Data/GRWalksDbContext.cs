@@ -5,6 +5,7 @@ namespace GRWalks.API.Data
 {
     public class GRWalksDbContext : DbContext
     {
+
         public GRWalksDbContext(DbContextOptions<GRWalksDbContext> dbContextOptions): base(dbContextOptions) 
         {
             
@@ -16,97 +17,192 @@ namespace GRWalks.API.Data
         public DbSet<Image> Images { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
+        //protected override void OnModelCreating(ModelBuilder modelBuilder)
+        //{
+        //    base.OnModelCreating(modelBuilder);
 
-            // Seed data for Difficulties (easy, medium, hard)
-            var difficulties = new List<Difficulty>()
-            {
-                new Difficulty()
-                {
-                    Id = Guid.Parse("a6f659ed-e040-42a9-80ca-60318dc9682f"),
-                    Name = "Easy"
-                },
+           // modelBuilder.Entity<Difficulty>().Property(e => e.Id).HasColumnType("UUID"); 
+            
 
-                new Difficulty()
-                {
-                    Id = Guid.Parse("29584951-fab9-49b0-971b-5beb9dcb1fb2"),
-                    Name = "Medium"
-                },
+            //modelBuilder.Entity<Region>(entity =>
+            //{
+            //    entity.Property(e => e.Id).HasColumnType("uuid");
+            //    entity.Property(e => e.Name).HasColumnType("text");
+            //    entity.Property(e => e.Code).HasColumnType("text");
+            //    entity.Property(e => e.RegionImageUrl).HasColumnType("text");
+            //});
 
-                new Difficulty()
-                {
-                    Id = Guid.Parse("cc3576f3-cc0b-4798-9075-39dd960b0e0b"),
-                    Name = "Hard"
-                }
-            };
+            //modelBuilder.Entity<Walk>(entity =>
+            //{
+            //    // Map the Id property to the uuid type
+            //    entity.Property(e => e.Id)
+            //          .HasColumnType("uuid")
+            //          .IsRequired();  // Mark as required (non-nullable)
 
-            //Seed difficulties to the database
-            modelBuilder.Entity<Difficulty>().HasData(difficulties);
+            //    // Map the Name property to text
+            //    entity.Property(e => e.Name)
+            //          .HasColumnType("text")
+            //          .IsRequired();  // Mark as required (non-nullable)
 
-            // Seed data for Regions (easy, medium, hard)
-            var regions = new List<Region>()
-            {
-                new Region()
-                {
-                    Id = Guid.Parse("4083319c-5aa3-4527-850f-9d65b1c08ea8"),
-                    Name = "Central Greece",
-                    Code = "CG",
-                    RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Location_map_of_CentralGreece_%28Greece%29.svg/1200px-Location_map_of_CentralGreece_%28Greece%29.svg.png"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("ebc8cfba-8311-47db-a979-0ff008a48e3f"),
-                    Name = "Peleponnese",
-                    Code = "PL",
-                    RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Location_map_of_Peloponnese_%28Greece%29.svg/1200px-Location_map_of_Peloponnese_%28Greece%29.svg.png"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("56df7c1e-2f30-4de4-8996-972297a27d1d"),
-                    Name = "Thessaly",
-                    Code = "TS",
-                    RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Location_map_of_Thessaly_%28Greece%29.svg/800px-Location_map_of_Thessaly_%28Greece%29.svg.png"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("fbe553ae-2d46-46c0-a950-c8655988c403"),
-                    Name = "Epirus",
-                    Code = "EP",
-                    RegionImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDvkxKw7Y3e2kIe6tSPqLaE5cQ2qATwcfpfg&s"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("d4e17e88-7fcb-4001-8792-e1550bd67426"),
-                    Name = "Macedonia",
-                    Code = "MD",
-                    RegionImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLZ5Ewoc38qb7ABx-22X_oA56vormcLrezGw&s"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("d9024e7f-1a6a-4c34-aa67-770b051e2b56"),
-                    Name = "Thrace",
-                    Code = "TH",
-                    RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Location_map_of_Thrace_%28Greece%29.svg/1200px-Location_map_of_Thrace_%28Greece%29.svg.png"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("30041b4f-0368-4b58-b48f-2bf3f374da17"),
-                    Name = "Aegean Islands",
-                    Code = "AI",
-                    RegionImageUrl = "https://mice.gr/wp-content/uploads/2017/01/aegean_islands.jpg"
-                },
-                new Region()
-                {
-                    Id = Guid.Parse("9467927f-2dd2-401d-8489-9acec073d257"),
-                    Name = "Ionian Islands",
-                    Code = "II",
-                    RegionImageUrl = "https://mice.gr/wp-content/uploads/2017/01/ionian.jpg"
-                }
-            };
+            //    // Map the Description property to text
+            //    entity.Property(e => e.Description)
+            //          .HasColumnType("text");
 
-            modelBuilder.Entity<Region>().HasData(regions);
-        }
+            //    // Map the LengthInKm property to double precision
+            //    entity.Property(e => e.LengthInKm)
+            //          .HasColumnType("double precision")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Map the WalkImageUrl property to text (nullable)
+            //    entity.Property(e => e.WalkImageUrl)
+            //          .HasColumnType("text");
+
+            //    // Map the DifficultyId property to uuid
+            //    entity.Property(e => e.DifficultyId)
+            //          .HasColumnType("uuid")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Map the RegionId property to uuid
+            //    entity.Property(e => e.RegionId)
+            //          .HasColumnType("uuid")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Define the foreign key relationship with Difficulty entity
+            //    entity.HasOne(e => e.Difficulty)
+            //          .WithMany()
+            //          .HasForeignKey(e => e.DifficultyId)
+            //          .OnDelete(DeleteBehavior.Cascade);  // Cascade delete behavior
+
+            //    // Define the foreign key relationship with Region entity
+            //    entity.HasOne(e => e.Region)
+            //          .WithMany()
+            //          .HasForeignKey(e => e.RegionId)
+            //          .OnDelete(DeleteBehavior.Cascade);  // Cascade delete behavior
+
+            //});
+
+            //modelBuilder.Entity<Image>(entity =>
+            //{
+            //    // Map the Id property to uuid type
+            //    entity.Property(e => e.Id)
+            //          .HasColumnType("uuid")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Map the FileName property to text type
+            //    entity.Property(e => e.FileName)
+            //          .HasColumnType("text")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Map the FileDescription property to text (nullable)
+            //    entity.Property(e => e.FileDescription)
+            //          .HasColumnType("text");
+
+            //    // Map the FileExtension property to text
+            //    entity.Property(e => e.FileExtension)
+            //          .HasColumnType("text")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Map the FileSizeInBytes property to bigint (for large file sizes)
+            //    entity.Property(e => e.FileSizeInBytes)
+            //          .HasColumnType("bigint")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Map the FilePath property to text type
+            //    entity.Property(e => e.FilePath)
+            //          .HasColumnType("text")
+            //          .IsRequired();  // Mark as required (non-nullable)
+
+            //    // Exclude the File property (IFormFile) as it's not mapped to the database
+            //    entity.Ignore(e => e.File);
+            //});
+
+            //// Seed data for Difficulties (easy, medium, hard)
+            //var difficulties = new List<Difficulty>()
+            //{
+            //    new Difficulty()
+            //    {
+            //        Id = Guid.Parse("a6f659ed-e040-42a9-80ca-60318dc9682f"),
+            //        Name = "Easy"
+            //    },
+
+            //    new Difficulty()
+            //    {
+            //        Id = Guid.Parse("29584951-fab9-49b0-971b-5beb9dcb1fb2"),
+            //        Name = "Medium"
+            //    },
+
+            //    new Difficulty()
+            //    {
+            //        Id = Guid.Parse("cc3576f3-cc0b-4798-9075-39dd960b0e0b"),
+            //        Name = "Hard"
+            //    }
+            //};
+
+            ////Seed difficulties to the database
+            //modelBuilder.Entity<Difficulty>().HasData(difficulties);
+
+            //// Seed data for Regions (easy, medium, hard)
+            //var regions = new List<Region>()
+            //{
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("4083319c-5aa3-4527-850f-9d65b1c08ea8"),
+            //        Name = "Central Greece",
+            //        Code = "CG",
+            //        RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Location_map_of_CentralGreece_%28Greece%29.svg/1200px-Location_map_of_CentralGreece_%28Greece%29.svg.png"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("ebc8cfba-8311-47db-a979-0ff008a48e3f"),
+            //        Name = "Peleponnese",
+            //        Code = "PL",
+            //        RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Location_map_of_Peloponnese_%28Greece%29.svg/1200px-Location_map_of_Peloponnese_%28Greece%29.svg.png"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("56df7c1e-2f30-4de4-8996-972297a27d1d"),
+            //        Name = "Thessaly",
+            //        Code = "TS",
+            //        RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Location_map_of_Thessaly_%28Greece%29.svg/800px-Location_map_of_Thessaly_%28Greece%29.svg.png"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("fbe553ae-2d46-46c0-a950-c8655988c403"),
+            //        Name = "Epirus",
+            //        Code = "EP",
+            //        RegionImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDvkxKw7Y3e2kIe6tSPqLaE5cQ2qATwcfpfg&s"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("d4e17e88-7fcb-4001-8792-e1550bd67426"),
+            //        Name = "Macedonia",
+            //        Code = "MD",
+            //        RegionImageUrl = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRLZ5Ewoc38qb7ABx-22X_oA56vormcLrezGw&s"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("d9024e7f-1a6a-4c34-aa67-770b051e2b56"),
+            //        Name = "Thrace",
+            //        Code = "TH",
+            //        RegionImageUrl = "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f1/Location_map_of_Thrace_%28Greece%29.svg/1200px-Location_map_of_Thrace_%28Greece%29.svg.png"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("30041b4f-0368-4b58-b48f-2bf3f374da17"),
+            //        Name = "Aegean Islands",
+            //        Code = "AI",
+            //        RegionImageUrl = "https://mice.gr/wp-content/uploads/2017/01/aegean_islands.jpg"
+            //    },
+            //    new Region()
+            //    {
+            //        Id = Guid.Parse("9467927f-2dd2-401d-8489-9acec073d257"),
+            //        Name = "Ionian Islands",
+            //        Code = "II",
+            //        RegionImageUrl = "https://mice.gr/wp-content/uploads/2017/01/ionian.jpg"
+            //    }
+            //};
+
+            // modelBuilder.Entity<Region>().HasData(regions);
+        //}
     }
 }

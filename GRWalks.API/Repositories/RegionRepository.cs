@@ -9,7 +9,7 @@ namespace GRWalks.API.Repositories
     public class RegionRepository : IRegionRepository
     {
         private readonly GRWalksDbContext _dbContext;
-        public RegionRepository(GRWalksDbContext dbContext) 
+        public RegionRepository(GRWalksDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -31,7 +31,7 @@ namespace GRWalks.API.Repositories
         public async Task<Region?> UpdateAsync(Guid id, Region region)
         {
             // check first if exist
-            var existingRegion = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
+             var existingRegion = await _dbContext.Regions.FirstOrDefaultAsync(x => x.Id == id);
 
             if (existingRegion == null)
             {

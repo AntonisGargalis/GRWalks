@@ -60,13 +60,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-builder.Services.AddDbContext<GRWalksDbContext>(options => 
-options.UseSqlServer(builder.Configuration.GetConnectionString("GRWalksConnectionString")));
+//builder.Services.AddDbContext<GRWalksDbContext>(options => 
+//options.UseSqlServer(builder.Configuration.GetConnectionString("GRWalksConnectionStringSql")));
+
+//builder.Services.AddDbContext<GRWalksAuthDbContext>(options =>
+//options.UseSqlServer(builder.Configuration.GetConnectionString("GRWalksAuthConnectionStringSql")));
+
+builder.Services.AddDbContext<GRWalksDbContext>(options =>
+options.UseNpgsql(builder.Configuration.GetConnectionString("GRWalksConnectionStringNpg")));
 
 builder.Services.AddDbContext<GRWalksAuthDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("GRWalksAuthConnectionString")));
+options.UseNpgsql(builder.Configuration.GetConnectionString("GRWalksAuthConnectionStringNpg")));
 
-builder.Services.AddScoped<IRegionRepository, RegionRepository>();
+//builder.Services.AddScoped<IRegionRepository, RegionRepository>();
 builder.Services.AddScoped<IWalkRepository, WalkRepository>();
 builder.Services.AddScoped<ITokenRepository, TokenRepository>();
 builder.Services.AddScoped<IImageRepository, LocalImageRepository>();
